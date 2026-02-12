@@ -1,0 +1,60 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "share": "disabled",
+  "model": "anthropic/claude-sonnet-4-5",
+  "small_model": "anthropic/claude-haiku-4-5",
+  "watcher": {
+    "ignore": ["**/.env*"]
+  },
+  "permission": {
+    "read": {
+      "~/.config/opencode/get-shit-done/*": "allow",
+      "**/.env*": "deny",
+      "**/*.pem": "deny",
+      "**/*id_rsa*": "deny",
+      "**/.ssh/*": "deny",
+      "*": "allow"
+    },
+    "bash": {
+      // Allow standard dev commands
+      "npm *": "allow",
+      "node *": "allow",
+      "ls *": "allow",
+      "cat *": "allow",
+      "grep *": "allow",
+      "mkdir *": "allow",
+      "git add *": "allow",
+      "git commit *": "allow",
+      "git status *": "allow",
+      "git diff": "allow",
+      "git log *": "allow",
+      "find *": "allow",
+      "head *": "allow",
+      "ls *": "allow",
+      "echo * ": "allow",
+      "basename *": "allow",
+      "wc *": "allow",
+      // DENY dangerous commands (Software Level Block)
+      "sudo *": "deny",
+      "docker *": "deny",
+      "rm -rf /": "deny",
+      "git push*": "deny",
+      "*": "ask" // Fallback: Ask for any command not explicitly allowed above
+    },
+    "webfetch": "deny",
+    "websearch": "deny",
+    // Control the Playwright MCP
+    "playwright_*": "allow",
+    // External directory permissions
+    "external_directory": {
+      "~/.config/opencode/get-shit-done/*": "allow"
+    }
+  },
+  "mcp": {
+    "playwright": {
+      "type": "local",
+      "command": ["npx", "-y", "@playwright/mcp@latest"],
+      "enabled": true
+    }
+  }
+}
