@@ -37,16 +37,14 @@ RUN apt-get update && \
 RUN usermod -l ai-agent -d /home/ai-agent -u 1000 -m node && \
     groupmod -n ai-agent -g 1000 node
 
-# Explicitly create the directory structure where volumes will be mounted.
-# This prevents Docker from auto-creating them as root at runtime.
+# auto-create so for writable volumes
 RUN mkdir -p /home/ai-agent/.local/share/opencode && \
-    mkdir -p /home/ai-agent/.local/state
-
-# Fix ownership of the home directory (now covers the new folders too)
-# RUN chown -R ai-agent:ai-agent /home/ai-agent
-# 1. Create the full path including the log folder
-RUN mkdir -p /home/ai-agent/.local/share/opencode/log /home/ai-agent/.local/state && \
+    mkdir -p /home/ai-agent/.local/share/opencode/log /home/ai-agent/.local/state && \
     chown -R ai-agent:ai-agent /home/ai-agent
+
+# Git configuration
+RUN git config --global user.email "ai-agent@local.dev" && \
+    git config --global user.name "AI Agent"
 
 WORKDIR /workspace/project
 
