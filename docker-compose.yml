@@ -13,7 +13,7 @@ services:
   # ============================================
   # Main OpenCode Sandbox
   # ============================================
-  ai-agent-sandbox:
+  sandbox:
     build:
       context: .
       dockerfile: Dockerfile
@@ -37,12 +37,12 @@ services:
       - no_proxy=localhost,127.0.0.1,secure-proxy
 
     volumes:
-      - ./:/workspace/project
+      - ./:/home/ai-agent/${PROJECT_NAME:-agent}
       # Credential masking
-      - /dev/null:/workspace/project/.env
-      - /dev/null:/workspace/project/.git/config
-      - ./.git:/workspace/project/.git
-      - /workspace/project/node_modules
+      - /dev/null:/home/ai-agent/${PROJECT_NAME:-agent}/.env
+      - /dev/null:/home/ai-agent/${PROJECT_NAME:-agent}/.git/config
+      - ./.git:/home/ai-agent/${PROJECT_NAME:-agent}/.git
+      - /home/ai-agent/${PROJECT_NAME:-agent}/node_modules
       # OpenCode CLI & Configuration
       - ${OPENCODE_CLI_PATH:-~/.opencode/bin/opencode}:/usr/local/bin/opencode:ro
       - ~/.config/opencode:/home/ai-agent/.config/opencode:ro
@@ -56,7 +56,7 @@ services:
       - SETGID
       - SETUID
     user: ai-agent
-    working_dir: /workspace/project
+    working_dir: /home/ai-agent/${PROJECT_NAME:-agent}
     command: ["/bin/bash"]
     tty: true
     stdin_open: true

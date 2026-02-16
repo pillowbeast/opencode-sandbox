@@ -35,3 +35,8 @@ dist-ssr
 # Package manager lock files (use pnpm-lock.yaml)
 package-lock.json
 yarn.lock
+
+.pnpm-store
+.playwright-mcp
+.opencode
+.screenshot
