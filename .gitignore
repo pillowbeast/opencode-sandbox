@@ -38,5 +38,4 @@ yarn.lock
 
 .pnpm-store
 .playwright-mcp
-.opencode
 .screenshot
